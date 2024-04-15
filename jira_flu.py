@@ -21,11 +21,11 @@ def getJSDData(writeToInflux = False):
             jqlCreatedWeek = 'project = MNGIT_Demo AND created >= startofWeek(-6d) AND created <= endOfWeek(-6d) order by created asc'
             jqlResolved = 'project = MNGIT_Demo AND status in (Done) AND resolved >= startOfWeek("-6d") AND resolved <= endOfWeek("-6d")'
             jqlResolvedBySystem = ('project = "ITMG_Demo" AND createdDate >= startOfWeek(-6d) AND createdDate < endOfWeek("-6d") \
-                AND status in (Done) AND issuetype in ("Task", "Task") AND resolution in (Done) AND "System Type" is not EMPTY')
+                AND status in (Done) AND issuetype in ("Task", "Task") AND resolution in (Done)')
         else:
             jqlCreatedWeek = 'project = MNGIT_Demo AND created >= startofWeek("+1d") and created <= endOfWeek("+1d") order by created asc'
             jqlResolvedBySystem = ('project = "ITMG_Demo" AND createdDate >= startOfWeek(-6d) AND createdDate < startOfWeek("+1d") \
-                AND status in (Done) AND issuetype in ("Task", "Task") AND resolution in (Done)AND "System Type" is not EMPTY')
+                AND status in (Done) AND issuetype in ("Task", "Task") AND resolution in (Done)')
             jqlResolved = 'project = MNGIT_Demo AND status in (Done) AND resolved >= startOfWeek("+1d") AND resolved <= endOfWeek("+1d")'
         print(jqlCreatedWeek)
         print(f"Weekday - {weekDay}")
