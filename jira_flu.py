@@ -13,9 +13,9 @@ import json
 def getJSDData(writeToInflux = False):
     try:
         dt = datetime.datetime.now()
-        jqlCreatedToday = 'project = ITSM AND created >= startOfDay()'
+        jqlCreatedToday = 'project = MNGIT_Demo AND created >= startOfDay()'
         #jqlCreatedWeek = 'project = ITSM AND created >= startOfWeek(-6d) AND created <= startOfWeek("+1d")'
-        jqlCreatedMonth = 'project = ITSM AND created >= startOfMonth()'
+        jqlCreatedMonth = 'project = MNGIT_Demo AND created >= startOfMonth()'
         weekDay = dt.weekday()
         if weekDay == 6:
             jqlCreatedWeek = 'project = MNGIT_Demo AND created >= startofWeek(-6d) AND created <= endOfWeek(-6d) order by created asc'
