@@ -1,6 +1,6 @@
 from jira import JIRA
-jira_options = {'server': 'http://192.168.16.15:8080'}
-jira = JIRA(options=jira_options, basic_auth=(alexk, "Qwerty123"))
+jira_options = {'server': 'http://192.168.16.15'}
+jira = JIRA(options=jira_options, basic_auth=(jirauser, "Qwerty123"))
 #import influxdb_client
 #from influxdb_client.client.write_api import SYNCHRONOUS
 #jira_options = {'server': constants.JIRA_SERVER}
