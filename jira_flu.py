@@ -5,7 +5,7 @@ jira = JIRA(options=jira_options, basic_auth=("alexk", "Qwerty123"))
 #from influxdb_client.client.write_api import SYNCHRONOUS
 #jira_options = {'server': constants.JIRA_SERVER}
 #jira = JIRA(options=jira_options, basic_auth=(constants.JIRA_LOGIN, constants.JIRA_PASS))
-
+import datetime
 def getJSDData(writeToInflux = False):
     try:
         dt = datetime.now()
