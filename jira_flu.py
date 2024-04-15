@@ -6,6 +6,10 @@ jira = JIRA(options=jira_options, basic_auth=("alexk", "Qwerty123"))
 #jira_options = {'server': constants.JIRA_SERVER}
 #jira = JIRA(options=jira_options, basic_auth=(constants.JIRA_LOGIN, constants.JIRA_PASS))
 import datetime
+import json
+import influxdbConnector
+import influxdb_client
+import Counter
 def getJSDData(writeToInflux = False):
     try:
         dt = datetime.datetime.now()
@@ -46,7 +50,6 @@ def getJSDData(writeToInflux = False):
             influxdbConnector.writeJSDBySystem(systemsCountList)
     except Exception as e:
         print(e)
-        
         
 def writeJSDBySystem(listToWrite):
 # Write script
