@@ -1,10 +1,16 @@
 from jira import JIRA
-jira_options = {'server': 'http://192.168.16.15:8080'}
-jira = JIRA(options=jira_options, basic_auth=(alexk, Qwerty123))
-#import influxdb_client
-#from influxdb_client.client.write_api import SYNCHRONOUS
-#jira_options = {'server': constants.JIRA_SERVER}
-#jira = JIRA(options=jira_options, basic_auth=(constants.JIRA_LOGIN, constants.JIRA_PASS))
+import influxdb_client
+from influxdb_client.client.write_api import SYNCHRONOUS
+
+client = influxdb_client.InfluxDBClient(
+    url=constants.IF_URL,
+    token=constants.IF_TOKEN,
+    org=constants.IF_ORG
+)
+
+
+jira_options = {'server': constants.JIRA_SERVER}
+jira = JIRA(options=jira_options, basic_auth=(constants.JIRA_LOGIN, constants.JIRA_PASS))
 
 def getJSDData(writeToInflux = False):
     try:
@@ -14,15 +20,15 @@ def getJSDData(writeToInflux = False):
         jqlCreatedMonth = 'project = ITSM AND created >= startOfMonth()'
         weekDay = dt.weekday()
         if weekDay == 6:
-            jqlCreatedWeek = 'project = MNGIT_Demo AND created >= startofWeek(-6d) AND created <= endOfWeek(-6d) order by created asc'
-            jqlResolved = 'project = MNGIT_Demo AND status in (Resolved, Closed) AND resolved >= startOfWeek("-6d") AND resolved <= endOfWeek("-6d")'
-            jqlResolvedBySystem = ('project = "ITMG_Demo" AND createdDate >= startOfWeek(-6d) AND createdDate < endOfWeek("-6d") \
-                AND status in (Resolved, Closed) AND issuetype in ("Task", "Task") AND resolution in (Resolved, Done) AND "System Type" is not EMPTY')
+            jqlCreatedWeek = 'project = ITSM AND created >= startofWeek(-6d) AND created <= endOfWeek(-6d) order by created asc'
+            jqlResolved = 'project = ITSM AND status in (Resolved, Closed) AND resolved >= startOfWeek("-6d") AND resolved <= endOfWeek("-6d")'
+            jqlResolvedBySystem = ('project = "IT Support and Monitoring" AND createdDate >= startOfWeek(-6d) AND createdDate < endOfWeek("-6d") \
+                AND status in (Resolved, Closed) AND issuetype in ("Cервисная заявка", "Проблема ПО") AND resolution in (Resolved, Done) AND "System Type" is not EMPTY')
         else:
-            jqlCreatedWeek = 'project = MNGIT_Demo AND created >= startofWeek("+1d") and created <= endOfWeek("+1d") order by created asc'
-            jqlResolvedBySystem = ('project = "ITMG_Demo" AND createdDate >= startOfWeek(-6d) AND createdDate < startOfWeek("+1d") \
-                AND status in (Resolved, Closed) AND issuetype in ("Task", "Task") AND resolution in (Resolved, Done)AND "System Type" is not EMPTY')
-            jqlResolved = 'project = MNGIT_Demo AND status in (Resolved, Closed) AND resolved >= startOfWeek("+1d") AND resolved <= endOfWeek("+1d")'
+            jqlCreatedWeek = 'project = ITSM AND created >= startofWeek("+1d") and created <= endOfWeek("+1d") order by created asc'
+            jqlResolvedBySystem = ('project = "IT Support and Monitoring" AND createdDate >= startOfWeek(-6d) AND createdDate < startOfWeek("+1d") \
+                AND status in (Resolved, Closed) AND issuetype in ("Cервисная заявка", "Проблема ПО") AND resolution in (Resolved, Done)AND "System Type" is not EMPTY')
+            jqlResolved = 'project = ITSM AND status in (Resolved, Closed) AND resolved >= startOfWeek("+1d") AND resolved <= endOfWeek("+1d")'
         print(jqlCreatedWeek)
         print(f"Weekday - {weekDay}")
         createdtoday = jira.search_issues(jqlCreatedToday,  fields= 'key, created', maxResults = 0).total
