@@ -8,7 +8,7 @@ jira = JIRA(options=jira_options, basic_auth=("alexk", "Qwerty123"))
 import datetime
 def getJSDData(writeToInflux = False):
     try:
-        dt = datetime.now()
+        dt = datetime.datetime.now()
         jqlCreatedToday = 'project = ITSM AND created >= startOfDay()'
         #jqlCreatedWeek = 'project = ITSM AND created >= startOfWeek(-6d) AND created <= startOfWeek("+1d")'
         jqlCreatedMonth = 'project = ITSM AND created >= startOfMonth()'
