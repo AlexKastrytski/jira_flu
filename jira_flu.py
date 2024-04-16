@@ -1,10 +1,17 @@
 from jira import JIRA
 jira_options = {'server': 'http://192.168.16.15:8080'}
 jira = JIRA(options=jira_options, basic_auth=("alexk", "Qwerty123"))
+import influxdb_client, os, time
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
-client = InfluxDBClient(url="http://192.168.16.15:8086", token="QbbYK3QllZtQa7QLFSe91yFB5d7nfRmEm34cKFTgNnqqXPYuYM3cy0DQOHyE_VDg6jYy2z90F8hyTnNQ-Gvrsg==")
-import influxdb_client
+token = os.environ.get("INFLUXDB_TOKEN")
+org = "A1_IKT"
+url = "http://192.168.16.15:8086"
+write_client = influxdb_client.InfluxDBClient(url=url, token=token, org=org)
+#from influxdb_client import InfluxDBClient, Point, WritePrecision
+#from influxdb_client.client.write_api import SYNCHRONOUS
+#client = InfluxDBClient(url="http://192.168.16.15:8086", token="QbbYK3QllZtQa7QLFSe91yFB5d7nfRmEm34cKFTgNnqqXPYuYM3cy0DQOHyE_VDg6jYy2z90F8hyTnNQ-Gvrsg==")
+#import influxdb_client
 #jira_options = {'server': constants.JIRA_SERVER}
 #jira = JIRA(options=jira_options, basic_auth=(constants.JIRA_LOGIN, constants.JIRA_PASS))
 import datetime
@@ -49,14 +56,14 @@ def getJSDData(writeToInflux = False):
         print("Calling write method")
         #__CsvWritter(systemsCountList, createdtoday, createdweek, createdMonth, resolved.total)
         if writeToInflux == True:
-            client.writeJSDBySystem(systemsCountList)
+            write_client.writeJSDBySystem(systemsCountList)
     except Exception as e:
         print(e)
         
 def writeJSDBySystem(listToWrite):
 # Write script
     try:
-        write_api = client.write_api(write_options=SYNCHRONOUS)
+        write_api = write_client.write_api(write_options=SYNCHRONOUS)
         print("Writting By system")
         for key, c in listToWrite.most_common():
             p = influxdb_client.Point("MNGIT_Demo").tag("JSD", "BySystem").field(key, c)
