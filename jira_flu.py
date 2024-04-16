@@ -49,7 +49,7 @@ def getJSDData(writeToInflux = False):
         print("Calling write method")
         #__CsvWritter(systemsCountList, createdtoday, createdweek, createdMonth, resolved.total)
         if writeToInflux == True:
-            InfluxDBClient.writeJSDBySystem(systemsCountList)
+            client.writeJSDBySystem(systemsCountList)
     except Exception as e:
         print(e)
         
