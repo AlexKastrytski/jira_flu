@@ -12,7 +12,7 @@ import influxdb_client
 import datetime
 import json
 from collections import Counter
-#import influxdbConnector
+import influxdbConnector
 #import influxdb_client
 def getJSDData(writeToInflux = False):
     try:
