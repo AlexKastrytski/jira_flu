@@ -1,6 +1,10 @@
 from jira import JIRA
 jira_options = {'server': 'http://192.168.16.15:8080'}
 jira = JIRA(options=jira_options, basic_auth=("alexk", "Qwerty123"))
+from influxdb_client import InfluxDBClient, Point, WritePrecision
+from influxdb_client.client.write_api import SYNCHRONOUS
+client = InfluxDBClient(url="http://192.168.16.15:8086", token="QbbYK3QllZtQa7QLFSe91yFB5d7nfRmEm34cKFTgNnqqXPYuYM3cy0DQOHyE_VDg6jYy2z90F8hyTnNQ-Gvrsg==")
+import influxdb_client
 #import influxdb_client
 #from influxdb_client.client.write_api import SYNCHRONOUS
 #jira_options = {'server': constants.JIRA_SERVER}
