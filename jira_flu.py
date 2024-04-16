@@ -8,7 +8,7 @@ jira = JIRA(options=jira_options, basic_auth=("alexk", "Qwerty123"))
 import datetime
 import json
 from collections import Counter
-import influxdbConnector
+#import influxdbConnector
 #import influxdb_client
 def getJSDData(writeToInflux = False):
     try:
