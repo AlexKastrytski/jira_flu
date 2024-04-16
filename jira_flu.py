@@ -9,7 +9,7 @@ import datetime
 import json
 #import influxdbConnector
 #import influxdb_client
-#import Counter
+import Counter
 def getJSDData(writeToInflux = False):
     try:
         dt = datetime.datetime.now()
