@@ -5,14 +5,12 @@ from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
 client = InfluxDBClient(url="http://192.168.16.15:8086", token="QbbYK3QllZtQa7QLFSe91yFB5d7nfRmEm34cKFTgNnqqXPYuYM3cy0DQOHyE_VDg6jYy2z90F8hyTnNQ-Gvrsg==")
 import influxdb_client
-#import influxdb_client
-#from influxdb_client.client.write_api import SYNCHRONOUS
 #jira_options = {'server': constants.JIRA_SERVER}
 #jira = JIRA(options=jira_options, basic_auth=(constants.JIRA_LOGIN, constants.JIRA_PASS))
 import datetime
 import json
 from collections import Counter
-import influxdbConnector
+#import influxdbConnector
 #import influxdb_client
 def getJSDData(writeToInflux = False):
     try:
@@ -51,7 +49,7 @@ def getJSDData(writeToInflux = False):
         print("Calling write method")
         #__CsvWritter(systemsCountList, createdtoday, createdweek, createdMonth, resolved.total)
         if writeToInflux == True:
-            influxdbConnector.writeJSDBySystem(systemsCountList)
+            InfluxDBClient.writeJSDBySystem(systemsCountList)
     except Exception as e:
         print(e)
         
@@ -61,7 +59,7 @@ def writeJSDBySystem(listToWrite):
         write_api = client.write_api(write_options=SYNCHRONOUS)
         print("Writting By system")
         for key, c in listToWrite.most_common():
-            p = influxdb_client.Point("ITSM").tag("JSD", "BySystem").field(key, c)
+            p = influxdb_client.Point("MNGIT_Demo").tag("JSD", "BySystem").field(key, c)
             write_api.write(bucket=constants.IF_BUCKET, org=constants.IF_ORG, record=p)
     except Exception as e:
             print("Exception occurred")
