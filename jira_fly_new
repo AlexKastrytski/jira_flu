@@ -24,16 +24,16 @@ def writeJSDBySystem(listToWrite):
     try:
         write_api = write_client.write_api(write_options=SYNCHRONOUS)
         print("Writting By system")
-        for key, c in listToWrite.most_common():
-            p = influxdb_client.Point("MNGIT_Demo").tag("JSD", "BySystem").field(key, c)
-            write_api.write(bucket=constants.IF_BUCKET, org=constants.IF_ORG, record=p)
+        for key in listToWrite:
+            p = influxdb_client.Point("MNGIT_Demo").tag("JSD", "BySystem").field('Task',key)
+            write_api.write(bucket="Trans_DB_Jira", org=org, record=p)
     except Exception as e:
             print("Exception occurred")
             
 def getJSDData(writeToInflux = False):
     try:
         dt = datetime.datetime.now()
-        jqlCreatedToday = 'project = MNGIT_Demo AND created >= startOfDay()'
+        jqlCreatedToday = 'project = "10100" AND status = DONE order by lastViewed DESC'
         #jqlCreatedWeek = 'project = ITSM AND created >= startOfWeek(-6d) AND created <= startOfWeek("+1d")'
         jqlCreatedMonth = 'project = MNGIT_Demo AND created >= startOfMonth()'
         weekDay = dt.weekday()
@@ -49,25 +49,19 @@ def getJSDData(writeToInflux = False):
             jqlResolved = 'project = MNGIT_Demo AND status in (Done) AND resolved >= startOfWeek("+1d") AND resolved <= endOfWeek("+1d")'
         print(jqlCreatedWeek)
         print(f"Weekday - {weekDay}")
-        createdtoday = jira.search_issues(jqlCreatedToday,  fields= 'key, created', maxResults = 0).total
+        createdtoday = jira.search_issues(jqlCreatedToday,  fields= 'key, created', maxResults = 0)
         createdweek = jira.search_issues(jqlCreatedWeek, fields = 'key, created', maxResults = 0).total
         createdMonth = jira.search_issues(jqlCreatedMonth, fields = 'key, created', maxResults = 0).total
         resolved = jira.search_issues(jqlResolved, fields = 'key, resolutiondate, customfield_14003', maxResults = 3000)
         resolvedBySystem = jira.search_issues(jqlResolvedBySystem, fields = 'key, resolutiondate, customfield_14003', maxResults = 3000)
         systemsCount = []
-        for item in resolvedBySystem:
-            if 'customfield_14003' in item.raw['fields']:
-                rawIssueJson = json.dumps(item.raw['fields']['customfield_14003'], indent = 4)
-                if rawIssueJson != 'null':
-                    systemsCount.append(json.loads(rawIssueJson)["value"])
-                elif rawIssueJson == 'null':
-                    systemsCount.append("Not defined")
-        systemsCountList = Counter(systemsCount)
-        print(systemsCountList)
+        for item in createdtoday:
+            systemsCount.append(item.key)
+        print(systemsCount)
         print("Calling write method")
         #__CsvWritter(systemsCountList, createdtoday, createdweek, createdMonth, resolved.total)
         if writeToInflux == True:
-            writeJSDBySystem(systemsCountList)
+            writeJSDBySystem(systemsCount)
     except Exception as e:
         print(e)
 getJSDData(True)
