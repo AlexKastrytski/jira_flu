@@ -70,7 +70,4 @@ def getJSDData(writeToInflux = False):
             write_client.writeJSDBySystem(systemsCountList)
     except Exception as e:
         print(e)
-        
-
-            
 getJSDData(True)
