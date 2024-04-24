@@ -49,7 +49,7 @@ def getJSDData(writeToInflux = False):
             jqlResolved = 'project = MNGIT_Demo AND status in (Done) AND resolved >= startOfWeek("+1d") AND resolved <= endOfWeek("+1d")'
         print(jqlCreatedWeek)
         print(f"Weekday - {weekDay}")
-        createdtoday = jira.search_issues(jqlCreatedToday,  fields= 'key, created', maxResults = 0)
+        createdtoday = jira.search_issues(jqlCreatedToday,  fields= 'key, created', maxResults =2000)
         createdweek = jira.search_issues(jqlCreatedWeek, fields = 'key, created', maxResults = 0).total
         createdMonth = jira.search_issues(jqlCreatedMonth, fields = 'key, created', maxResults = 0).total
         resolved = jira.search_issues(jqlResolved, fields = 'key, resolutiondate, customfield_14003', maxResults = 3000)

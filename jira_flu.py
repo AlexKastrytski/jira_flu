@@ -60,6 +60,5 @@ def getJSDData(writeToInflux = False):
     except Exception as e:
         print(e)
         
-
-            
+        
 getJSDData(True)
