@@ -28,7 +28,7 @@ def writeJSDBySystem(listToWrite):
             p = influxdb_client.Point("MNGIT_Demo").tag("JSD", "BySystem").field('Task',key)
             write_api.write(bucket="Trans_DB_Jira", org=org, record=p)
     except Exception as e:
-            print("Exception occurred")
+            print(e)
             
 def getJSDData(writeToInflux = False):
     try:
