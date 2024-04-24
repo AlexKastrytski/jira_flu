@@ -19,6 +19,17 @@ import json
 from collections import Counter
 #import influxdbConnector
 #import influxdb_client
+def writeJSDBySystem(listToWrite):
+# Write script
+    try:
+        write_api = write_client.write_api(write_options=SYNCHRONOUS)
+        print("Writting By system")
+        for key, c in listToWrite.most_common():
+            p = influxdb_client.Point("MNGIT_Demo").tag("JSD", "BySystem").field(key, c)
+            write_api.write(bucket=constants.IF_BUCKET, org=constants.IF_ORG, record=p)
+    except Exception as e:
+            print("Exception occurred")
+            
 def getJSDData(writeToInflux = False):
     try:
         dt = datetime.datetime.now()
