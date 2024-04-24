@@ -34,7 +34,7 @@ def getJSDData(writeToInflux = False):
     try:
         dt = datetime.datetime.now()
         #jqlCreatedToday = 'project = "10100" AND status = DONE order by lastViewed DESC'
-        jqlCreatedToday = 'project in "10000", "10001", "10100" AND status = DONE order by lastViewed DESC'
+        jqlCreatedToday = 'project in ("10000", "10001", "10100") AND issuetype = Task AND status = DONE'
         #jqlCreatedWeek = 'project = ITSM AND created >= startOfWeek(-6d) AND created <= startOfWeek("+1d")'
         jqlCreatedMonth = 'project = MNGIT_Demo AND created >= startOfMonth()'
         weekDay = dt.weekday()
