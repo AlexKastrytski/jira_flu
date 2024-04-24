@@ -25,7 +25,7 @@ def writeJSDBySystem(listToWrite):
         write_api = write_client.write_api(write_options=SYNCHRONOUS)
         print("Writting By system")
         for key in listToWrite:
-            p = influxdb_client.Point("MNGIT_Demo").tag("JSD", "BySystem").field('Task',key)
+            p = influxdb_client.Point("MNGIT_Demo", "ITMG_Demo", "DCSD_Demo").tag("JSD", "BySystem").field('Task',key)
             write_api.write(bucket="Trans_DB_Jira", org=org, record=p)
     except Exception as e:
             print(e)
@@ -33,7 +33,8 @@ def writeJSDBySystem(listToWrite):
 def getJSDData(writeToInflux = False):
     try:
         dt = datetime.datetime.now()
-        jqlCreatedToday = 'project = "10100" AND status = DONE order by lastViewed DESC'
+        #jqlCreatedToday = 'project = "10100" AND status = DONE order by lastViewed DESC'
+        jqlCreatedToday = 'project in ("10000", "10001", "10100") AND issuetype = Task order by lastViewed DESC'
         #jqlCreatedWeek = 'project = ITSM AND created >= startOfWeek(-6d) AND created <= startOfWeek("+1d")'
         jqlCreatedMonth = 'project = MNGIT_Demo AND created >= startOfMonth()'
         weekDay = dt.weekday()
