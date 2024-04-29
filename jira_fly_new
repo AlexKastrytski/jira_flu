@@ -25,7 +25,7 @@ def writeJSDBySystem(listToWrite):
         write_api = write_client.write_api(write_options=SYNCHRONOUS)
         print("Writting By system")
         for key in listToWrite:
-            p = influxdb_client.Point("MNGIT_Demo").tag("JSD", "BySystem").field('Task',key)
+            p = influxdb_client.Point("MNGIT_Demo").tag("JSD", "BySystem").field('Task','assignee',key)
             write_api.write(bucket="Trans_DB_Jira", org=org, record=p)
     except Exception as e:
             print(e)
