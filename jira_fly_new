@@ -1,9 +1,9 @@
-from jira import JIRA
+from jira import JIRA # type: ignore
 jira_options = {'server': 'http://192.168.16.15:8080'}
 jira = JIRA(options=jira_options, basic_auth=("alexk", "Qwerty123"))
-import influxdb_client, os, time
-from influxdb_client import InfluxDBClient, Point, WritePrecision
-from influxdb_client.client.write_api import SYNCHRONOUS
+import influxdb_client, os, time # type: ignore
+from influxdb_client import InfluxDBClient, Point, WritePrecision # type: ignore
+from influxdb_client.client.write_api import SYNCHRONOUS # type: ignore
 token = 'FKNAyFerai9zrEuwq2VsOFxWSNfidmzJDWiEBTU-iy0Qsrh0fIaXLbJLRga53Whw-rU0n1io1Yk-h2biQPpwIw=='
 org = "A1_IKT"
 url = "http://192.168.16.15:8086"
@@ -33,8 +33,8 @@ def writeJSDBySystem(listToWrite):
 def getJSDData(writeToInflux = False):
     try:
         dt = datetime.datetime.now()
-        #jqlCreatedToday = 'project = "10100" AND status = DONE order by lastViewed DESC'
-        jqlCreatedToday = 'project = "10100" AND issuetype = Task AND status = DONE AND assignee in (alexk)'
+        jqlCreatedToday = 'project = "10100" AND status = DONE order by lastViewed DESC'
+        #jqlCreatedToday = 'project = "10100" AND issuetype = Task AND status = DONE AND assignee in (alexk)'
         #jqlCreatedWeek = 'project = ITSM AND created >= startOfWeek(-6d) AND created <= startOfWeek("+1d")'
         jqlCreatedMonth = 'project = MNGIT_Demo AND created >= startOfMonth()'
         weekDay = dt.weekday()
