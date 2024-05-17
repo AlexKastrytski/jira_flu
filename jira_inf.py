@@ -4,7 +4,7 @@ jira = JIRA(options=jira_options, basic_auth=("alexk", "Qwerty123"))
 import influxdb_client, os, time # type: ignore
 from influxdb_client import InfluxDBClient, Point, WritePrecision # type: ignore
 from influxdb_client.client.write_api import SYNCHRONOUS # type: ignore
-tocken = 'kSv39QDf-yaQpJq1rnnbQyUXEro_DztXFPOMLKvUO0w2DCBbbCGuigA0xwsnLwv4k93R7h93sSBYucjBLQg55Q=='
+token = 'kSv39QDf-yaQpJq1rnnbQyUXEro_DztXFPOMLKvUO0w2DCBbbCGuigA0xwsnLwv4k93R7h93sSBYucjBLQg55Q=='
 org = "A1_IKT"
 url = "http://192.168.16.14:8086"
 write_client = influxdb_client.InfluxDBClient(url=url, token=token, org=org)
