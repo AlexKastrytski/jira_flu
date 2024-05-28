@@ -1,4 +1,4 @@
-from jira import JIRA # type: ignore
+from jira import JIRA
 jira_options = {'server': 'http://192.168.16.15:8080'}
 jira = JIRA(options=jira_options, basic_auth=("alexk", "Qwerty123"))
 import influxdb_client, os, time # type: ignore
